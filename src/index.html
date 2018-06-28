@@ -1,14 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>AngularDemo</title>
-  <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Button Test Page</title>
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+  <!-- Add support for window.customElements -->
+  <!--<script src="../node_modules/@webcomponents/custom-elements/custom-elements.min.js"></script>-->
+
+  <!-- Required for custom elements for apps building to es5.-->
+  <script src="../node_modules/@webcomponents/custom-elements/src/native-shim.js"></script>
+
+  <!-- Required for shadow DOM v1 in pretty much everything except Chrome -->
+  <!--<script src="../node_modules/@webcomponents/shadydom/shadydom.min.js"></script>-->
+
+  <script src="../elements.js"></script>
 </head>
+
 <body>
-  <custom-root></custom-root>
+  <template id="test-template">
+    <slot name="test-slot">named slot is NOT working from index.html</slot>
+    <p>This is a test template tag from index.html passed into the web component.</p>
+  </template>
+
+  <custom-button label="First Value" template-id="test-template">
+    <span slot="test-slot">named slot is working from index.html</span>
+  </custom-button>
+
+  <custom-button label="First Value">
+    generic slot is working from index.html
+  </custom-button>
+
+  <test-container></test-container>
+
+  <script>
+    const button = document.querySelector('custom-button');
+    button.addEventListener('action', (event) => {
+      console.log(`"action" emitted: ${event.detail}`);
+    })
+    setTimeout(() => button.label = 'Second Value', 3000);
+  </script>
 </body>
+
 </html>

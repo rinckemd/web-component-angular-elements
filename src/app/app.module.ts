@@ -1,16 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { Injector, NgModule } from '@angular/core';
+import { ButtonModule } from './button/button.module';
+import { ContainerModule } from './container/container.module';
+import { overrideRenderFactory } from '../shadow-dom-renderer';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [ BrowserModule, ButtonModule, ContainerModule ],
+  providers: [overrideRenderFactory()]
 })
-export class AppModule { }
+export class AppModule {
+    constructor() {}
+
+    ngDoBootstrap() {}
+}
